@@ -19,9 +19,9 @@ var hitpoints: int = max_hitpoints:
 			queue_free()
 		provoked = true
 			
-
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
+@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var playback: AnimationNodeStateMachinePlayback = animation_tree["parameters/playback"]
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -33,19 +33,17 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:	
 	var next_position = navigation_agent_3d.get_next_path_position()
 	
-	# Add the gravity.
-	#if not is_on_floor():
-		#velocity.y -= gravity * delta
-	
 	var direction: Vector3 = global_position.direction_to(next_position)
 	var distance: float = global_position.distance_to(player.global_position)
 	
 	if distance <= aggro_range:
 		provoked = true
+	else:
+		provoked = false
 	
 	if provoked:
 		if distance <= attack_range:
-			animation_player.play("Attack")
+			playback.travel("Attack")
 	
 	if direction:
 		look_at_target(direction)

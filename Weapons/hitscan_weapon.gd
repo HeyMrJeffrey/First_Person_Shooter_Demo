@@ -31,7 +31,6 @@ func shoot() -> void:
 		ammo_handler.use_ammo(ammo_type)
 		muzzle_flash.restart()
 		var collider = ray_cast_3d.get_collider()
-		print(collider)
 		cooldown_timer.start(1.0/fire_rate)
 		weapon_mesh.position.z += recoil
 		

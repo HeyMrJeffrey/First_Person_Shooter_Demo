@@ -41,3 +41,7 @@ func get_current_index() -> int:
 		if get_child(index).visible == true:
 			return index
 	return 0		
+	
+func get_active_weapon_ammo() -> AmmoHandler.ammo_type:
+	return get_child(get_current_index()).ammo_type
+	
