@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://c5peegtwn4nm6"]
+
+[ext_resource type="FontFile" uid="uid://cr81psme248r4" path="res://Assets/Oswald/static/Oswald-Regular.ttf" id="1_nuccp"]
+[ext_resource type="Script" path="res://Player/game_over_menu.gd" id="2_y0vla"]
+[ext_resource type="Shader" uid="uid://cu8pai8qknkw1" path="res://Player/game_over_menu.tres" id="3_6qv4o"]
+
+[sub_resource type="Theme" id="Theme_mu1pe"]
+default_font = ExtResource("1_nuccp")
+default_font_size = 64
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_devy7"]
+shader = ExtResource("3_6qv4o")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w4bg1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mxt3j"]
+font_size = 96
+
+[node name="GameOverMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_mu1pe")
+script = ExtResource("2_y0vla")
+
+[node name="BackgroundBlur" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_devy7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_w4bg1")
+metadata/_edit_use_anchors_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "YOU ARE DEAD"
+label_settings = SubResource("LabelSettings_mxt3j")
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "TRY AGAIN?"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "QUIT
+"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
