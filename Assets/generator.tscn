@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuc5atx8504w4"]
+
+[ext_resource type="PackedScene" uid="uid://c3puducm8iyta" path="res://Assets/Generator.glb" id="1_5aals"]
+[ext_resource type="Script" path="res://Assets/CompletionArea.gd" id="2_pbg6y"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_plo0i"]
+size = Vector3(2.25, 2.75, 6)
+
+[node name="Generator" instance=ExtResource("1_5aals")]
+transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, 0, 1.7, 0)
+
+[node name="CompletionArea" type="Area3D" parent="Generator_003" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("2_pbg6y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Generator_003/CompletionArea" index="0"]
+transform = Transform3D(0.906309, 0, 0.422619, 0, 1, 0, -0.422619, 0, 0.906309, -0.5, -0.3, 0.5)
+shape = SubResource("BoxShape3D_plo0i")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Generator_003" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-06, 0.75, -7.6294e-06)
+light_color = Color(0.568627, 0.909804, 0.956863, 1)
+light_energy = 2.0
+light_specular = 0.75
+shadow_enabled = true
+omni_range = 8.0
+omni_attenuation = 0.25
+
+[connection signal="body_entered" from="Generator_003/CompletionArea" to="Generator_003/CompletionArea" method="_on_body_entered"]

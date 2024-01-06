@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dcwl5avlx3x7q"]
+[gd_scene load_steps=30 format=3 uid="uid://dcwl5avlx3x7q"]
 
 [ext_resource type="Material" uid="uid://b8k88siyym6lg" path="res://Levels/Materials/GrayMaterial.tres" id="1_llt2k"]
 [ext_resource type="Texture2D" uid="uid://cnhbu6v4urj00" path="res://Assets/level-floorplan.png" id="2_17flg"]
@@ -16,8 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://dkew2schhrtnp" path="res://Assets/Light.glb" id="12_asj6y"]
 [ext_resource type="PackedScene" uid="uid://ksyx8hkrghl0" path="res://Assets/Vent.glb" id="13_j6kic"]
 [ext_resource type="PackedScene" uid="uid://dvb8r2vsneixl" path="res://Assets/Pipes.glb" id="14_6ew8s"]
-[ext_resource type="PackedScene" uid="uid://c3puducm8iyta" path="res://Assets/Generator.glb" id="17_tsgnv"]
+[ext_resource type="PackedScene" uid="uid://cuc5atx8504w4" path="res://Assets/generator.tscn" id="17_hokkv"]
 [ext_resource type="PackedScene" uid="uid://chcwhxfo06sf" path="res://Assets/Monitor.glb" id="18_t3q06"]
+[ext_resource type="AudioStream" uid="uid://dtqmwws2jes0k" path="res://SoundEffects/background_music.ogg" id="19_uwwy6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ktej"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -119,7 +120,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 8)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 8)
 
 [node name="SmallBulletPickup4" parent="Pickups" instance=ExtResource("5_cbygd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 4, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 4, -17.2)
 
 [node name="SmallBulletPickup5" parent="Pickups" instance=ExtResource("5_cbygd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 4, -15)
@@ -131,7 +132,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 17)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 1, 17)
 
 [node name="BulletPickup4" parent="Pickups" instance=ExtResource("6_mim4f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 4, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 4, -17.2)
 
 [node name="BulletPickup5" parent="Pickups" instance=ExtResource("6_mim4f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 4, -15)
@@ -251,11 +252,11 @@ material = ExtResource("1_llt2k")
 [node name="MeshInstance3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit/Lava" index="0"]
 mesh = SubResource("PlaneMesh_hc1y8")
 
+[node name="OmniLight3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit/Lava" index="1"]
+omni_range = 15.0
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit/Lava"]
 shape = SubResource("ConvexPolygonShape3D_dklkc")
-
-[node name="OmniLight3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit/Lava" index="2"]
-omni_range = 15.0
 
 [node name="LavaPit2" type="CSGBox3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -1.75, 23.5)
@@ -268,11 +269,11 @@ material = ExtResource("1_llt2k")
 [node name="MeshInstance3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit2/Lava" index="0"]
 mesh = SubResource("PlaneMesh_of3fk")
 
+[node name="OmniLight3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit2/Lava" index="1"]
+omni_range = 15.0
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit2/Lava"]
 shape = SubResource("ConvexPolygonShape3D_xvymh")
-
-[node name="OmniLight3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit2/Lava" index="2"]
-omni_range = 15.0
 
 [node name="Room4" type="CSGBox3D" parent="NavigationRegion3D/LevelContents/Room/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1.5, -3)
@@ -485,13 +486,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -10)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 mesh = SubResource("PlaneMesh_578g5")
 
+[node name="OmniLight3D" parent="LavaPools/Lava" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+omni_range = 25.0
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LavaPools/Lava"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 shape = SubResource("ConvexPolygonShape3D_7drpq")
-
-[node name="OmniLight3D" parent="LavaPools/Lava" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
-omni_range = 25.0
 
 [node name="Decoration" type="Node3D" parent="."]
 
@@ -905,17 +906,11 @@ transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.371
 
 [node name="Generator" type="Node3D" parent="Decoration"]
 
-[node name="Generator" parent="Decoration/Generator" instance=ExtResource("17_tsgnv")]
-transform = Transform3D(-0.422618, 0, -0.906308, 0, 1, 0, 0.906308, 0, -0.422618, 27.7, 1.6, 13.8)
+[node name="Generator" parent="Decoration/Generator" instance=ExtResource("17_hokkv")]
+transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, 28, 1.7, 12)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Decoration/Generator/Generator"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8147e-06, 0.75, -7.62939e-06)
-light_color = Color(0.568627, 0.909804, 0.956863, 1)
-light_energy = 2.0
-light_specular = 0.75
-shadow_enabled = true
-omni_range = 8.0
-omni_attenuation = 0.25
+[node name="Generator_003" parent="Decoration/Generator/Generator" index="0"]
+transform = Transform3D(1.78814e-07, 0, -0.999999, 0, 1, 0, 0.999999, 0, 1.78814e-07, 0.573345, 0, 1.9394)
 
 [node name="Monitor" type="Node3D" parent="Decoration"]
 
@@ -1015,6 +1010,12 @@ shadow_enabled = true
 omni_range = 3.0
 omni_attenuation = 0.25
 
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_uwwy6")
+volume_db = -5.0
+autoplay = true
+
 [editable path="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit/Lava"]
 [editable path="NavigationRegion3D/LevelContents/Room/CSGCombiner3D/LavaPit2/Lava"]
 [editable path="LavaPools/Lava"]
+[editable path="Decoration/Generator/Generator"]

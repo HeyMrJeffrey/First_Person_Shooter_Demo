@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dt3wjybg4act2"]
+[gd_scene load_steps=25 format=3 uid="uid://dt3wjybg4act2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_2h8vy"]
 [ext_resource type="Script" path="res://Player/smooth_camera.gd" id="2_4xt2u"]
@@ -9,7 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://pneumjcxyl7e" path="res://Player/damage.png" id="5_l2l3c"]
 [ext_resource type="PackedScene" uid="uid://c5peegtwn4nm6" path="res://Player/game_over_menu.tscn" id="6_jphsx"]
 [ext_resource type="Script" path="res://Player/AmmoHandler.gd" id="6_t56fw"]
+[ext_resource type="AudioStream" uid="uid://d0c8jy5o4j6mp" path="res://SoundEffects/powerup.ogg" id="7_07tw7"]
 [ext_resource type="FontFile" uid="uid://cr81psme248r4" path="res://Assets/Oswald/static/Oswald-Regular.ttf" id="9_wlorh"]
+[ext_resource type="Script" path="res://Player/Timer.gd" id="11_k6tou"]
+[ext_resource type="PackedScene" uid="uid://d2d3x7iso1l8j" path="res://Player/win_menu.tscn" id="11_vqibu"]
+[ext_resource type="AudioStream" uid="uid://bnx7n0vydlpc" path="res://SoundEffects/player_hit.ogg" id="12_ag51a"]
+[ext_resource type="AudioStream" uid="uid://mcu0771w2p3b" path="res://SoundEffects/enemy_death.ogg" id="13_i4k26"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_iwaqx"]
 
@@ -76,9 +81,38 @@ _data = {
 "TakeDamage": SubResource("Animation_x3csi")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_egrf7"]
+font_size = 80
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="FontFile" id="FontFile_ex0g8"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/glyphs/0/advance = Vector2(0, 0)
+cache/0/16/0/glyphs/0/offset = Vector2(0, 0)
+cache/0/16/0/glyphs/0/size = Vector2(0, 0)
+cache/0/16/0/glyphs/0/uv_rect = Rect2(0, 0, 0, 0)
+cache/0/16/0/glyphs/0/texture_idx = -1
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/2 = Vector2(0, 0)
+cache/0/16/2/glyphs/0/offset = Vector2(0, 0)
+cache/0/16/2/glyphs/0/size = Vector2(0, 0)
+cache/0/16/2/glyphs/0/uv_rect = Rect2(0, 0, 0, 0)
+cache/0/16/2/glyphs/0/texture_idx = -1
+
 [sub_resource type="LabelSettings" id="LabelSettings_rb4sx"]
+font = SubResource("FontFile_ex0g8")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6urjc"]
 font = ExtResource("9_wlorh")
-font_size = 64
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -97,6 +131,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 unique_name_in_owner = true
 top_level = true
 cull_mask = 1048573
+fov = 120.0
 script = ExtResource("2_4xt2u")
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="CameraPivot/SmoothCamera"]
@@ -114,7 +149,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(1280, 720)
 render_target_update_mode = 4
 
 [node name="WeaponCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
@@ -139,6 +174,9 @@ unique_name_in_owner = true
 script = ExtResource("6_t56fw")
 ammo_label = NodePath("../../../../MarginContainer/AmmoLabel")
 weapon_handler = NodePath("../WeaponHandler")
+
+[node name="PickupSoundEffect" type="AudioStreamPlayer" parent="SubViewportContainer/SubViewport/WeaponCamera/AmmoHandler"]
+stream = ExtResource("7_07tw7")
 
 [node name="Reticle" type="CenterContainer" parent="."]
 anchors_preset = 15
@@ -190,7 +228,62 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "999
 "
+label_settings = SubResource("LabelSettings_egrf7")
+
+[node name="Controls" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Controls" type="Label" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "WASD:  MOVE
+LMB:    FIRE
+RMB:    AIM
+SPACE: JUMP
+
+"
 label_settings = SubResource("LabelSettings_rb4sx")
+
+[node name="Timer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Label" parent="Timer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "##:##:##"
+label_settings = SubResource("LabelSettings_6urjc")
+script = ExtResource("11_k6tou")
 
 [node name="GameOverMenu" parent="." instance=ExtResource("6_jphsx")]
 visible = false
+
+[node name="WinMenu" parent="." node_paths=PackedStringArray("time") instance=ExtResource("11_vqibu")]
+time = NodePath("../Timer/Timer")
+
+[node name="HitByEnemyAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_ag51a")
+
+[node name="EnemyKilledAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_i4k26")

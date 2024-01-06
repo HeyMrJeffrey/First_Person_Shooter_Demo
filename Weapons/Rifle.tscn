@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdjxfdkbtgwnp"]
+[gd_scene load_steps=11 format=3 uid="uid://cdjxfdkbtgwnp"]
 
 [ext_resource type="PackedScene" uid="uid://lefofmhfhb3f" path="res://Weapons/hitscan_weapon.tscn" id="1_40hrc"]
 [ext_resource type="PackedScene" uid="uid://caetm1t7hoj5a" path="res://Weapons/Rifle.glb" id="2_5wvkl"]
+[ext_resource type="AudioStream" uid="uid://praqwm8216ti" path="res://SoundEffects/Rifle_Fire.ogg" id="3_mm7ss"]
+[ext_resource type="AudioStream" uid="uid://cw70nkyqrp206" path="res://SoundEffects/Empty_Mag.ogg" id="4_e6cd8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iw67y"]
 emission_enabled = true
@@ -87,5 +89,11 @@ fixed_fps = 60
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_dwrlb")
 draw_pass_1 = SubResource("BoxMesh_m3mv0")
+
+[node name="ShootAudio" type="AudioStreamPlayer" parent="." index="4"]
+stream = ExtResource("3_mm7ss")
+
+[node name="EmptyMagAudio" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource("4_e6cd8")
 
 [editable path="Rifle"]

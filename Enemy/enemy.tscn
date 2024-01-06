@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bjvfqlwv7mvxx"]
+[gd_scene load_steps=15 format=3 uid="uid://bjvfqlwv7mvxx"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_0eu83"]
 [ext_resource type="PackedScene" uid="uid://cro6sjg7u46gj" path="res://Enemy/Drone.glb" id="2_b0ogf"]
+[ext_resource type="AudioStream" uid="uid://cf0jb5kobk4cm" path="res://SoundEffects/enemy_hit.ogg" id="3_nw3am"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uegin"]
 height = 1.5
@@ -148,3 +149,7 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_ugsno")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="HitByPlayerAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nw3am")
+volume_db = 10.0

@@ -13,9 +13,16 @@ extends Node3D
 @onready var cooldown_timer: Timer = $CooldownTimer
 @onready var weapon_position: Vector3 = weapon_mesh.position
 @onready var ray_cast_3d: RayCast3D = $RayCast3D
+@onready var shoot_audio: AudioStreamPlayer = $ShootAudio
+@onready var empty_mag_audio: AudioStreamPlayer = $EmptyMagAudio
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Input.is_action_pressed("fire"):
+		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
 	if automatic:
 		if Input.is_action_pressed("fire"):
 			if cooldown_timer.is_stopped():
@@ -28,6 +35,7 @@ func _process(delta: float) -> void:
 			
 func shoot() -> void:
 	if ammo_handler.has_ammo(ammo_type):
+		shoot_audio.play()
 		ammo_handler.use_ammo(ammo_type)
 		muzzle_flash.restart()
 		var collider = ray_cast_3d.get_collider()
@@ -41,3 +49,6 @@ func shoot() -> void:
 			var spark = sparks.instantiate()
 			add_child(spark)
 			spark.global_position = ray_cast_3d.get_collision_point()
+	else:
+		if empty_mag_audio.playing == false:
+			empty_mag_audio.play()

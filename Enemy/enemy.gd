@@ -15,13 +15,16 @@ var aggro_range: float = 12.0
 var hitpoints: int = max_hitpoints:
 	set(value):
 		hitpoints = value
+		hit_by_player_audio.play()
 		if hitpoints <= 0:
+			player.enemy_killed()
 			queue_free()
 		provoked = true
 			
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var playback: AnimationNodeStateMachinePlayback = animation_tree["parameters/playback"]
+@onready var hit_by_player_audio: AudioStreamPlayer = $HitByPlayerAudio
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")

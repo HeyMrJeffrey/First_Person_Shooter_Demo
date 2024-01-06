@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnrnpntuaenmk"]
+[gd_scene load_steps=11 format=3 uid="uid://dnrnpntuaenmk"]
 
 [ext_resource type="PackedScene" uid="uid://lefofmhfhb3f" path="res://Weapons/hitscan_weapon.tscn" id="1_l1xyx"]
 [ext_resource type="PackedScene" uid="uid://k1irv6i6641w" path="res://Weapons/SMG.glb" id="2_77pio"]
+[ext_resource type="AudioStream" uid="uid://w3w4a53gbxhe" path="res://SoundEffects/SMG_Fire.ogg" id="3_x40cq"]
+[ext_resource type="AudioStream" uid="uid://cw70nkyqrp206" path="res://SoundEffects/Empty_Mag.ogg" id="4_q4wso"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iw67y"]
 emission_enabled = true
@@ -81,6 +83,10 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_dwrlb")
 draw_pass_1 = SubResource("BoxMesh_m3mv0")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4"]
+[node name="ShootAudio" type="AudioStreamPlayer" parent="." index="4"]
+stream = ExtResource("3_x40cq")
+
+[node name="EmptyMagAudio" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource("4_q4wso")
 
 [editable path="SMG"]

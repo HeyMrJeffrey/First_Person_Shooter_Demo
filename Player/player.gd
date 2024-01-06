@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed: float = 10.0
+@export var speed: float = 7.5
 @export var jump_height: float = 1.0
 @export var fall_multiplier: float = 2.5
 @export var max_hitpoints: int = 100
@@ -12,6 +12,7 @@ var mouse_motion: Vector2 = Vector2.ZERO
 var hitpoints: int = max_hitpoints:
 	set(value):
 		if value < hitpoints:
+			hit_by_enemy_audio.play()
 			damage_animation_player.stop(false)
 			damage_animation_player.play("TakeDamage")
 		hitpoints = value
@@ -22,11 +23,14 @@ var hitpoints: int = max_hitpoints:
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var damage_animation_player: AnimationPlayer = $DamageTexture/DamageAnimationPlayer
 @onready var game_over_menu: Control = $GameOverMenu
+@onready var win_menu: Control = $WinMenu
 @onready var ammo_handler: AmmoHandler = %AmmoHandler
 @onready var smooth_camera: Camera3D = %SmoothCamera
 @onready var smooth_camera_fov: float = smooth_camera.fov
 @onready var weapon_camera: Camera3D = %WeaponCamera
 @onready var weapon_camera_fov: float = weapon_camera.fov
+@onready var hit_by_enemy_audio: AudioStreamPlayer = $HitByEnemyAudio
+@onready var enemy_killed_audio: AudioStreamPlayer = $EnemyKilledAudio
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -84,4 +88,9 @@ func handle_camera_rotation() -> void:
 	camera_pivot.rotate_x(mouse_motion.y)
 	camera_pivot.rotation_degrees.x = clampf(camera_pivot.rotation_degrees.x, -90.0, 90.0)
 	mouse_motion = Vector2.ZERO
+	
+func enemy_killed() -> void:
+	enemy_killed_audio.play()
 
+func win_game() -> void:
+	win_menu.win_game()

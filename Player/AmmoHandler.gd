@@ -3,6 +3,7 @@ class_name AmmoHandler
 
 @export var ammo_label: Label
 @export var weapon_handler: Node3D
+@onready var pickup_sound_effect: AudioStreamPlayer = $PickupSoundEffect
 
 enum ammo_type {
 	BULLET,
@@ -23,6 +24,7 @@ func use_ammo(type: ammo_type) -> void:
 		update_ammo_label(weapon_handler.get_active_weapon_ammo())
 		
 func add_ammo(type: ammo_type, amount: int) -> void:
+	pickup_sound_effect.play()
 	ammo_storage[type] += amount
 	update_ammo_label(weapon_handler.get_active_weapon_ammo())
 

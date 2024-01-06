@@ -1,42 +1,41 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5peegtwn4nm6"]
+[gd_scene load_steps=8 format=3 uid="uid://d2d3x7iso1l8j"]
 
-[ext_resource type="FontFile" uid="uid://cr81psme248r4" path="res://Assets/Oswald/static/Oswald-Regular.ttf" id="1_nuccp"]
-[ext_resource type="Script" path="res://Player/game_over_menu.gd" id="2_y0vla"]
-[ext_resource type="Shader" uid="uid://cu8pai8qknkw1" path="res://Player/game_over_menu.tres" id="3_6qv4o"]
-[ext_resource type="AudioStream" uid="uid://c0oc87yr3efry" path="res://SoundEffects/player_death.ogg" id="4_6qou0"]
+[ext_resource type="Shader" uid="uid://cu8pai8qknkw1" path="res://Player/game_over_menu.tres" id="1_axklo"]
+[ext_resource type="Script" path="res://Player/win_menu.gd" id="1_cqni6"]
+[ext_resource type="AudioStream" uid="uid://22o27gaummis" path="res://SoundEffects/win.ogg" id="2_wvdmj"]
 
-[sub_resource type="Theme" id="Theme_mu1pe"]
-default_font = ExtResource("1_nuccp")
-default_font_size = 64
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahpy8"]
+shader = ExtResource("1_axklo")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_devy7"]
-shader = ExtResource("3_6qv4o")
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eirk1"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w4bg1"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_mxt3j"]
+[sub_resource type="LabelSettings" id="LabelSettings_m7myq"]
 font_size = 96
 
-[node name="GameOverMenu" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_5jlpm"]
+font_size = 36
+outline_color = Color(0, 0, 0, 1)
+
+[node name="WinMenu" type="Control"]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_mu1pe")
-script = ExtResource("2_y0vla")
+script = ExtResource("1_cqni6")
 
 [node name="BackgroundBlur" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_devy7")
+material = SubResource("ShaderMaterial_ahpy8")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("PlaceholderTexture2D_w4bg1")
+texture = SubResource("PlaceholderTexture2D_eirk1")
 metadata/_edit_use_anchors_ = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -54,8 +53,14 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "YOU ARE DEAD"
-label_settings = SubResource("LabelSettings_mxt3j")
+text = "YOU WIN"
+label_settings = SubResource("LabelSettings_m7myq")
+horizontal_alignment = 1
+
+[node name="TimeSection" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "##:##:##"
+label_settings = SubResource("LabelSettings_5jlpm")
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="CenterContainer/VBoxContainer"]
@@ -67,9 +72,9 @@ layout_mode = 2
 text = "QUIT
 "
 
-[node name="DeathSoundEffectAudio" type="AudioStreamPlayer" parent="."]
+[node name="WinSoundEffectAudio" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("4_6qou0")
+stream = ExtResource("2_wvdmj")
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
