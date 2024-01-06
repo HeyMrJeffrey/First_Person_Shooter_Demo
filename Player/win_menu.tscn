@@ -11,9 +11,12 @@ shader = ExtResource("1_axklo")
 
 [sub_resource type="LabelSettings" id="LabelSettings_m7myq"]
 font_size = 96
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5jlpm"]
 font_size = 36
+outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
 [node name="WinMenu" type="Control"]

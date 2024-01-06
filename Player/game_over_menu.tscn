@@ -16,6 +16,8 @@ shader = ExtResource("3_6qv4o")
 
 [sub_resource type="LabelSettings" id="LabelSettings_mxt3j"]
 font_size = 96
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="GameOverMenu" type="Control"]
 process_mode = 3
