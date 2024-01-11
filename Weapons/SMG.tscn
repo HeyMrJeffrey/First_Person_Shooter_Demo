@@ -85,8 +85,10 @@ draw_pass_1 = SubResource("BoxMesh_m3mv0")
 
 [node name="ShootAudio" type="AudioStreamPlayer" parent="." index="4"]
 stream = ExtResource("3_x40cq")
+volume_db = -15.0
 
 [node name="EmptyMagAudio" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource("4_q4wso")
+volume_db = -15.0
 
 [editable path="SMG"]

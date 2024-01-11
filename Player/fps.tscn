@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://caymrpxk574bx"]
+
+[ext_resource type="FontFile" uid="uid://cr81psme248r4" path="res://Assets/Oswald/static/Oswald-Regular.ttf" id="1_llp7c"]
+[ext_resource type="Script" path="res://Player/fps_meter.gd" id="2_tx3an"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3b8ow"]
+font = ExtResource("1_llp7c")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="FPS" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CommandCanvas" type="CanvasLayer" parent="."]
+
+[node name="FPSMeter" type="Label" parent="CommandCanvas"]
+anchors_preset = -1
+anchor_left = 0.96875
+anchor_right = 1.0
+anchor_bottom = 0.0347222
+grow_horizontal = 0
+text = "##"
+label_settings = SubResource("LabelSettings_3b8ow")
+script = ExtResource("2_tx3an")
+metadata/_edit_use_anchors_ = true

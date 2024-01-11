@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cuc5atx8504w4"]
 
 [ext_resource type="PackedScene" uid="uid://c3puducm8iyta" path="res://Assets/Generator.glb" id="1_5aals"]
-[ext_resource type="Script" path="res://Assets/CompletionArea.gd" id="2_pbg6y"]
+[ext_resource type="Script" path="res://Assets/completion_area.gd" id="2_xxa5g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_plo0i"]
 size = Vector3(2.25, 2.75, 6)
@@ -10,8 +10,7 @@ size = Vector3(2.25, 2.75, 6)
 transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, 0, 1.7, 0)
 
 [node name="CompletionArea" type="Area3D" parent="Generator_003" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-script = ExtResource("2_pbg6y")
+script = ExtResource("2_xxa5g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Generator_003/CompletionArea" index="0"]
 transform = Transform3D(0.906309, 0, 0.422619, 0, 1, 0, -0.422619, 0, 0.906309, -0.5, -0.3, 0.5)

@@ -1,18 +1,34 @@
 extends CharacterBody3D
 class_name Enemy
 
-const SPEED = 5.0
+#region Constants & Variables
+# Default movement speed
+const base_speed = 5.0
 
-@export var max_hitpoints: int = 100
-@export var attack_range: float = 1.5
-@export var attack_damage: int = 20
+# Enemy maximum hitpoints
+var max_hitpoints: int = 100
+
+# Area in which the enemy can deal damage
+var attack_range: float = 1.5
+
+# How much damage is done to the player upon attack
+var attack_damage: int = 20
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+# Reference to the player
 var player
+
+# True if the play is in attack range, or the enemy has been shot
 var provoked: bool = false
+
+# How close the player can be before the enemy locks on to attack
 var aggro_range: float = 12.0
+
+# Getter/Setter controlling logic for changing enemies hitpoints
 var hitpoints: int = max_hitpoints:
+#endregion
 	set(value):
 		hitpoints = value
 		hit_by_player_audio.play()
@@ -21,10 +37,12 @@ var hitpoints: int = max_hitpoints:
 			queue_free()
 		provoked = true
 			
+#region Onready Variables
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var playback: AnimationNodeStateMachinePlayback = animation_tree["parameters/playback"]
 @onready var hit_by_player_audio: AudioStreamPlayer = $HitByPlayerAudio
+#endregion
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -50,11 +68,11 @@ func _physics_process(delta: float) -> void:
 	
 	if direction:
 		look_at_target(direction)
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * base_speed
+		velocity.z = direction.z * base_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, base_speed)
+		velocity.z = move_toward(velocity.z, 0, base_speed)
 
 	move_and_slide()
 	

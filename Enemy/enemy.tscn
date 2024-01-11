@@ -49,6 +49,22 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_5o1rr"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Drone2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(0, 0.4, 0), Vector3(0, 0.3, 0), Vector3(0, 0.4, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_jpnh5"]
 length = 0.001
 tracks/0/type = "value"
@@ -74,22 +90,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_5o1rr"]
-resource_name = "Idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Drone2:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(-2, -2, -2),
-"update": 0,
-"values": [Vector3(0, 0.4, 0), Vector3(0, 0.3, 0), Vector3(0, 0.4, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dmpkx"]
@@ -133,6 +133,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("CapsuleShape3D_uegin")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -152,4 +153,3 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="HitByPlayerAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_nw3am")
-volume_db = 10.0

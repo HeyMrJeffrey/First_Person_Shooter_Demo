@@ -1,24 +1,31 @@
-[gd_scene load_steps=25 format=3 uid="uid://dt3wjybg4act2"]
+[gd_scene load_steps=28 format=3 uid="uid://dt3wjybg4act2"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_2h8vy"]
 [ext_resource type="Script" path="res://Player/smooth_camera.gd" id="2_4xt2u"]
+[ext_resource type="Script" path="res://Player/weapon_handler.gd" id="3_5452u"]
 [ext_resource type="Script" path="res://Player/crosshair.gd" id="3_aojsw"]
 [ext_resource type="PackedScene" uid="uid://cdjxfdkbtgwnp" path="res://Weapons/Rifle.tscn" id="3_g8acn"]
-[ext_resource type="Script" path="res://Player/WeaponHandler.gd" id="3_gg42b"]
 [ext_resource type="PackedScene" uid="uid://dnrnpntuaenmk" path="res://Weapons/SMG.tscn" id="3_mtht2"]
 [ext_resource type="Texture2D" uid="uid://pneumjcxyl7e" path="res://Player/damage.png" id="5_l2l3c"]
+[ext_resource type="Script" path="res://Player/ammo_handler.gd" id="6_0rgwt"]
 [ext_resource type="PackedScene" uid="uid://c5peegtwn4nm6" path="res://Player/game_over_menu.tscn" id="6_jphsx"]
-[ext_resource type="Script" path="res://Player/AmmoHandler.gd" id="6_t56fw"]
 [ext_resource type="AudioStream" uid="uid://d0c8jy5o4j6mp" path="res://SoundEffects/powerup.ogg" id="7_07tw7"]
 [ext_resource type="FontFile" uid="uid://cr81psme248r4" path="res://Assets/Oswald/static/Oswald-Regular.ttf" id="9_wlorh"]
-[ext_resource type="Script" path="res://Player/Timer.gd" id="11_k6tou"]
+[ext_resource type="Script" path="res://Player/timer.gd" id="11_1g15b"]
 [ext_resource type="PackedScene" uid="uid://d2d3x7iso1l8j" path="res://Player/win_menu.tscn" id="11_vqibu"]
 [ext_resource type="AudioStream" uid="uid://bnx7n0vydlpc" path="res://SoundEffects/player_hit.ogg" id="12_ag51a"]
 [ext_resource type="AudioStream" uid="uid://mcu0771w2p3b" path="res://SoundEffects/enemy_death.ogg" id="13_i4k26"]
+[ext_resource type="PackedScene" uid="uid://caymrpxk574bx" path="res://Player/fps.tscn" id="16_vtdli"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_iwaqx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccqs3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ijt5a"]
+height = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j3neo"]
+height = 1.0
 
 [sub_resource type="Animation" id="Animation_e4dqk"]
 length = 0.001
@@ -87,6 +94,9 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="FontFile" id="FontFile_ex0g8"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -118,17 +128,32 @@ outline_color = Color(0, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_2h8vy")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="StandingMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_iwaqx")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ccqs3")
+
+[node name="CrouchingMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_ijt5a")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+shape = SubResource("CapsuleShape3D_j3neo")
+disabled = true
+
+[node name="CrouchToStandRayCast" type="RayCast3D" parent="."]
+target_position = Vector3(0, 2, 0)
 
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 
 [node name="SmoothCamera" type="Camera3D" parent="CameraPivot"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 top_level = true
 cull_mask = 1048573
 fov = 120.0
@@ -154,11 +179,13 @@ render_target_update_mode = 4
 
 [node name="WeaponCamera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 cull_mask = 2
 fov = 40.0
 
 [node name="WeaponHandler" type="Node3D" parent="SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("weapon_1", "weapon_2")]
-script = ExtResource("3_gg42b")
+unique_name_in_owner = true
+script = ExtResource("3_5452u")
 weapon_1 = NodePath("Rifle")
 weapon_2 = NodePath("SMG")
 
@@ -166,14 +193,14 @@ weapon_2 = NodePath("SMG")
 ammo_handler = NodePath("../../AmmoHandler")
 
 [node name="SMG" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" node_paths=PackedStringArray("ammo_handler") instance=ExtResource("3_mtht2")]
+visible = false
 ammo_handler = NodePath("../../AmmoHandler")
 ammo_type = 1
 
-[node name="AmmoHandler" type="Node" parent="SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("ammo_label", "weapon_handler")]
+[node name="AmmoHandler" type="Node" parent="SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("ammo_label")]
 unique_name_in_owner = true
-script = ExtResource("6_t56fw")
+script = ExtResource("6_0rgwt")
 ammo_label = NodePath("../../../../MarginContainer/AmmoLabel")
-weapon_handler = NodePath("../WeaponHandler")
 
 [node name="PickupSoundEffect" type="AudioStreamPlayer" parent="SubViewportContainer/SubViewport/WeaponCamera/AmmoHandler"]
 stream = ExtResource("7_07tw7")
@@ -223,6 +250,7 @@ theme_override_constants/margin_bottom = 8
 metadata/_edit_use_anchors_ = true
 
 [node name="AmmoLabel" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -248,9 +276,10 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "WASD:  MOVE
-LMB:    FIRE
-RMB:    AIM
-SPACE: JUMP
+LMB:  FIRE
+RMB:  AIM
+SPACE:  JUMP
+MOUSE-WHEEL:	SWITCH WEAPONS
 
 "
 label_settings = SubResource("LabelSettings_rb4sx")
@@ -274,7 +303,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "##:##:##"
 label_settings = SubResource("LabelSettings_6urjc")
-script = ExtResource("11_k6tou")
+script = ExtResource("11_1g15b")
 
 [node name="GameOverMenu" parent="." instance=ExtResource("6_jphsx")]
 visible = false
@@ -284,6 +313,12 @@ time = NodePath("../Timer/Timer")
 
 [node name="HitByEnemyAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_ag51a")
+volume_db = -10.0
 
 [node name="EnemyKilledAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_i4k26")
+volume_db = -15.0
+
+[node name="FPS" parent="." instance=ExtResource("16_vtdli")]
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

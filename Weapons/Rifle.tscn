@@ -39,6 +39,8 @@ recoil = 0.3
 weapon_mesh = NodePath("Rifle")
 weapon_damage = 70
 muzzle_flash = NodePath("MuzzleFlash")
+automatic = null
+ammo_type = null
 
 [node name="Rifle" parent="." index="1" instance=ExtResource("2_5wvkl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.35, -1.8)
@@ -76,6 +78,9 @@ layers = 2
 [node name="Muzzle breaks" parent="Rifle" index="10"]
 layers = 2
 
+[node name="RayCast3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
 [node name="MuzzleFlash" type="GPUParticles3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, -0.3, -3.2)
 layers = 2
@@ -92,8 +97,10 @@ draw_pass_1 = SubResource("BoxMesh_m3mv0")
 
 [node name="ShootAudio" type="AudioStreamPlayer" parent="." index="4"]
 stream = ExtResource("3_mm7ss")
+volume_db = -15.0
 
 [node name="EmptyMagAudio" type="AudioStreamPlayer" parent="." index="5"]
 stream = ExtResource("4_e6cd8")
+volume_db = -15.0
 
 [editable path="Rifle"]
